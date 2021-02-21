@@ -23,6 +23,18 @@ class ListaEnlazada:
             node = node.next
         node.next = Nodo(None, data)
 
+    # Delete (pendiente)
+    def delete_by_index(self, index: int):
+        count = 0
+        node = self.head
+        prev = None
+        while node != None:
+            if index == count:
+                prev.next = node.next
+            prev = node
+            node = node.next
+            count = count + 1
+
     # Devuelve el tamaño de la lista
     def get_size(self):
         count = 0
