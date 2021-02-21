@@ -43,22 +43,32 @@ class ListaEnlazada:
             node = node.next
         return None
 
+    # Elimina el primer elemento de la lista
     def delete_first(self):
-        self.head = self.head.next
+        if not self.is_void():
+            self.head = self.head.next
 
+    # Elimina el ultimo elemento de la lista
     def delete_last(self):
-        node = self.head
-        prev = None
-        while node.next != None:
-            prev = node
-            node = node.next
-        prev.next = None
+        if not self.is_void():
+            node = self.head
+            prev = None
+            while node.next != None:
+                prev = node
+                node = node.next
+            if self.get_size() == 1:
+                self.head = None
+            else:
+                prev.next = None
 
     # Imprimir Lista
     def print_list(self):
-        print('head: {}'.format(self.head.data))
-        node = self.head
-        while node != None:
-            print('{}'.format(node.data), end=' -> ')
-            node = node.next
-        print()
+        if not self.is_void():
+            print('head: {}'.format(self.head.data))
+            node = self.head
+            while node != None:
+                print('{}'.format(node.data), end=' -> ')
+                node = node.next
+            print()
+        else:
+            print('is void')
