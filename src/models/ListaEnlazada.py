@@ -23,18 +23,6 @@ class ListaEnlazada:
             node = node.next
         node.next = Nodo(None, data)
 
-    # Delete (pendiente)
-    def delete_by_index(self, index: int):
-        count = 0
-        node = self.head
-        prev = None
-        while node != None:
-            if index == count:
-                prev.next = node.next
-            prev = node
-            node = node.next
-            count = count + 1
-
     # Devuelve el tamaño de la lista
     def get_size(self):
         count = 0
@@ -43,6 +31,22 @@ class ListaEnlazada:
             node = node.next
             count = count + 1
         return count
+
+    # Devuelve el primer elemento
+    def get_first(self):
+        if not self.is_void():
+            return self.head.data
+        else:
+            return None
+
+    # Devuelve el ultimo elemento
+    def get_last(self):
+        if self.is_void():
+            return None
+        node = self.head
+        while node.next != None:
+            node = node.next
+        return node.data
 
     # Devuelve el dato en base al indice
     def get_by_index(self, index: int):
@@ -54,6 +58,18 @@ class ListaEnlazada:
             count = count + 1
             node = node.next
         return None
+
+    # Añade un elemento en el indice
+    def set_by_index(self, index: int, data):
+        count = 0
+        node = self.head
+        while node != None:
+            if index == count:
+                node.data = data
+                return
+            count = count + 1
+            node = node.next
+        return
 
     # Elimina el primer elemento de la lista
     def delete_first(self):
@@ -73,10 +89,24 @@ class ListaEnlazada:
             else:
                 prev.next = None
 
+    # Eliminar indicando el indice
+    def delete_by_index(self, index: int):
+        if index == 0:
+            self.delete_first()
+            return
+        count = 0
+        node = self.head
+        prev = None
+        while node != None:
+            if index == count:
+                prev.next = node.next
+            prev = node
+            node = node.next
+            count = count + 1
+
     # Imprimir Lista
     def print_list(self):
         if not self.is_void():
-            print('head: {}'.format(self.head.data))
             node = self.head
             while node != None:
                 print('{}'.format(node.data), end=' -> ')
