@@ -17,15 +17,33 @@ def load_file(data: ListaEnlazada):
         for obj in matrix:
             obj_attrib = obj.attrib
             data.get_last().insert(int(obj_attrib['x'])-1,
-                                   int(obj_attrib['y'])-1, obj.text)
+                                   int(obj_attrib['y'])-1, int(obj.text))
 
+
+def process_file(data: ListaEnlazada, output: ListaEnlazada):
     count = 0
     while data.get_size() > count:
-        data.get_by_index(count).print_matrix()
+        matrix = data.get_by_index(count)
+        process_matrix = Matriz(matrix.name, matrix.m, matrix.n)
+        redux_matrix = Matriz(matrix.name, matrix.m, matrix.n)
+
+        y_count = 0
+        while matrix.n > y_count:
+            x_count = 0
+            while matrix.m > x_count:
+                if matrix.get(x_count, y_count) >= 1:
+                    process_matrix.insert(x_count, y_count, 1)
+                else:
+                    process_matrix.insert(x_count, y_count, 0)
+                x_count = x_count + 1
+            y_count = y_count + 1
         count = count + 1
 
+        matrix.print_matrix()
+        process_matrix.print_matrix()
 
-def main_menu(data: ListaEnlazada):
+
+def main_menu(data: ListaEnlazada, output: ListaEnlazada):
     flag = True
     while flag:
         print('Menu Principal')
@@ -42,6 +60,7 @@ def main_menu(data: ListaEnlazada):
             load_file(data)
             continue
         if opt == '2':
+            process_file(data, output)
             continue
         if opt == '3':
             continue
@@ -57,5 +76,6 @@ def main_menu(data: ListaEnlazada):
 
 if __name__ == '__main__':
     lista_matrices = ListaEnlazada()
-    main_menu(lista_matrices)
+    matrices_procesadas = ListaEnlazada()
+    main_menu(lista_matrices, matrices_procesadas)
     pass

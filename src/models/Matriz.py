@@ -3,6 +3,7 @@ from models import ListaEnlazada
 
 class Matriz:
     def __init__(self, name: str, m: int, n: int):
+        self.name = name
         self.m = m
         self.n = n
         self.row_list = ListaEnlazada()
@@ -22,6 +23,10 @@ class Matriz:
     def insert(self, x: int, y: int, data):
         row = self.row_list.get_by_index(y)
         row.set_by_index(x, data)
+
+    def get(self, x: int, y: int):
+        row = self.row_list.get_by_index(y)
+        return row.get_by_index(x)
 
     def print_matrix(self):
         count = 0
