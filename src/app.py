@@ -21,26 +21,7 @@ def load_file(data: ListaEnlazada):
 
 
 def process_file(data: ListaEnlazada, output: ListaEnlazada):
-    count = 0
-    while data.get_size() > count:
-        matrix = data.get_by_index(count)
-        process_matrix = Matriz(matrix.name, matrix.m, matrix.n)
-        redux_matrix = Matriz(matrix.name, matrix.m, matrix.n)
-
-        y_count = 0
-        while matrix.n > y_count:
-            x_count = 0
-            while matrix.m > x_count:
-                if matrix.get(x_count, y_count) >= 1:
-                    process_matrix.insert(x_count, y_count, 1)
-                else:
-                    process_matrix.insert(x_count, y_count, 0)
-                x_count = x_count + 1
-            y_count = y_count + 1
-        count = count + 1
-
-        matrix.print_matrix()
-        process_matrix.print_matrix()
+    pass
 
 
 def main_menu(data: ListaEnlazada, output: ListaEnlazada):
