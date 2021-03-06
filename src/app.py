@@ -19,9 +19,26 @@ def load_file(data: ListaEnlazada):
             data.get_last().insert(int(obj_attrib['x'])-1,
                                    int(obj_attrib['y'])-1, int(obj.text))
 
+        data.get_last().print_matrix()
 
-def process_file(data: ListaEnlazada, output: ListaEnlazada):
-    pass
+
+def print_info():
+    print('> Xhunik Nikol Miguel Mutzutz')
+    print('> 201900462')
+    print('> Introducción a la Programación y Computación 2, Sección D')
+    print('> Ingenieria en Ciencias y Sistemas')
+    print('> 4to Semestre')
+
+
+def render_graph(data: ListaEnlazada):
+    count = 0
+    print('Selecciona una matriz: ')
+    while data.get_size() > count:
+        print('{}. {}'.format(count, data.get_by_index(count).name))
+        count = count + 1
+
+    matrix_index = int(input('> '))
+    data.get_by_index(matrix_index).render_matrix()
 
 
 def main_menu(data: ListaEnlazada, output: ListaEnlazada):
@@ -41,13 +58,14 @@ def main_menu(data: ListaEnlazada, output: ListaEnlazada):
             load_file(data)
             continue
         if opt == '2':
-            process_file(data, output)
             continue
         if opt == '3':
             continue
         if opt == '4':
+            print_info()
             continue
         if opt == '5':
+            render_graph(data)
             continue
         if opt == '6':
             exit()
