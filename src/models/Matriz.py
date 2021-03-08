@@ -1,4 +1,4 @@
-from models import ListaEnlazada
+from models import ListaEnlazada, Matriz
 from os import system, startfile
 
 
@@ -38,7 +38,7 @@ class Matriz:
             count = count + 1
         print()
 
-    def render_matrix(self):
+    def render_matrix(self, process: Matriz):
         temp_file = open('graph.dot', 'w+')
         temp_file.write('digraph G {\n')  # begin file
         temp_file.write('name [label="{}"];\n'.format(self.name))
@@ -47,6 +47,7 @@ class Matriz:
         temp_file.write('name -> m;')
         temp_file.write('name -> n;')
 
+        # Gráfica entrada
         x_count = 0
         while self.m > x_count:
 
@@ -62,6 +63,28 @@ class Matriz:
 
             temp_file.write('name -> x{}y{};'.format(x_count, 0))
             x_count = x_count + 1
+
+        # Gráfica salida procesada
+        temp_file.write('proc_name [label="{}"];\n'.format(process.name))
+        temp_file.write('proc_m [label="m={}"];\n'.format(process.m))
+        temp_file.write('proc_n [label="n={}"];\n'.format(process.n))
+        temp_file.write('proc_name -> proc_m;')
+        temp_file.write('proc_name -> proc_n;')
+        p_x_count = 0
+        while process.m > p_x_count:
+            p_y_count = 0
+            while process.n > p_y_count:
+                temp_file.write('px{}py{} [label="{}"];\n'.format(
+                    p_x_count, p_y_count, process.get(p_x_count, p_y_count)))
+
+                if not (p_y_count + 1) >= process.n:
+                    temp_file.write(
+                        'px{}py{} -> px{}py{};\n'.format(p_x_count, p_y_count, p_x_count, p_y_count+1))
+                p_y_count = p_y_count + 1
+
+            temp_file.write('proc_name -> px{}py{};'.format(p_x_count, 0))
+            p_x_count = p_x_count + 1
+
         temp_file.write('}\n')  # end file
         temp_file.close()
         system('dot -Tsvg graph.dot -o output.svg')

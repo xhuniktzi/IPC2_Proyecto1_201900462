@@ -19,7 +19,7 @@ def load_file(data: ListaEnlazada):
             data.get_last().insert(int(obj_attrib['x'])-1,
                                    int(obj_attrib['y'])-1, int(obj.text))
 
-        data.get_last().print_matrix()
+        # data.get_last().print_matrix()
 
 
 def process_file(data: ListaEnlazada, output: ListaEnlazada):
@@ -42,7 +42,7 @@ def process_file(data: ListaEnlazada, output: ListaEnlazada):
             y_count = y_count + 1
         output.add_to_end(output_matrix)
         count = count + 1
-        output.get_last().print_matrix()
+        # output.get_last().print_matrix()
 
 
 def write_file(output: ListaEnlazada):
@@ -87,7 +87,7 @@ def print_info():
     print('> 4to Semestre')
 
 
-def render_graph(data: ListaEnlazada):
+def render_graph(data: ListaEnlazada, output: ListaEnlazada):
     count = 0
     print('Selecciona una matriz: ')
     while data.get_size() > count:
@@ -95,7 +95,8 @@ def render_graph(data: ListaEnlazada):
         count = count + 1
 
     matrix_index = int(input('> '))
-    data.get_by_index(matrix_index).render_matrix()
+    output_matrix = output.get_by_index(matrix_index)
+    data.get_by_index(matrix_index).render_matrix(output_matrix)
 
 
 def main_menu(data: ListaEnlazada, output: ListaEnlazada):
@@ -124,7 +125,7 @@ def main_menu(data: ListaEnlazada, output: ListaEnlazada):
             print_info()
             continue
         if opt == '5':
-            render_graph(data)
+            render_graph(data, output)
             continue
         if opt == '6':
             exit()
