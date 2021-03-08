@@ -19,8 +19,6 @@ def load_file(data: ListaEnlazada):
             data.get_last().insert(int(obj_attrib['x'])-1,
                                    int(obj_attrib['y'])-1, int(obj.text))
 
-        # data.get_last().print_matrix()
-
 
 def process_file(data: ListaEnlazada, output: ListaEnlazada):
     output.clear()
@@ -42,7 +40,6 @@ def process_file(data: ListaEnlazada, output: ListaEnlazada):
             y_count = y_count + 1
         output.add_to_end(output_matrix)
         count = count + 1
-        # output.get_last().print_matrix()
 
 
 def write_file(output: ListaEnlazada):
@@ -137,4 +134,3 @@ if __name__ == '__main__':
     lista_matrices = ListaEnlazada()
     matrices_procesadas = ListaEnlazada()
     main_menu(lista_matrices, matrices_procesadas)
-    pass
