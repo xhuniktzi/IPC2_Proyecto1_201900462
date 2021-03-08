@@ -31,6 +31,7 @@ class Matriz:
 
     def print_matrix(self):
         count = 0
+        print(self.name)
         size = self.row_list.get_size()
         while size > count:
             self.row_list.get_by_index(count).print_list()

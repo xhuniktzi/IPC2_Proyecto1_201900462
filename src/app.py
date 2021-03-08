@@ -1,5 +1,5 @@
 from tkinter import Tk
-from tkinter.filedialog import askopenfilename
+from tkinter.filedialog import askopenfilename, asksaveasfilename
 from xml.etree import ElementTree as ET
 from models import ListaEnlazada
 from models import Matriz
@@ -20,6 +20,63 @@ def load_file(data: ListaEnlazada):
                                    int(obj_attrib['y'])-1, int(obj.text))
 
         data.get_last().print_matrix()
+
+
+def process_file(data: ListaEnlazada, output: ListaEnlazada):
+    output.clear()
+    count = 0
+    while data.get_size() > count:
+        matrix = data.get_by_index(count)
+        output_matrix = Matriz(
+            'output - {}'.format(matrix.name), matrix.m, matrix.n)
+        y_count = 0
+        while matrix.n > y_count:
+            x_count = 0
+            while matrix.m > x_count:
+                value = matrix.get(x_count, y_count)
+                if value > 0:
+                    output_matrix.insert(x_count, y_count, 1)
+                else:
+                    output_matrix.insert(x_count, y_count, 0)
+                x_count = x_count + 1
+            y_count = y_count + 1
+        output.add_to_end(output_matrix)
+        count = count + 1
+        output.get_last().print_matrix()
+
+
+def write_file(output: ListaEnlazada):
+    def save():
+        files = [('XML Files', '*.xml')]
+        filename = asksaveasfilename(filetypes=files, defaultextension=files)
+        return filename
+
+    count = 0
+    print('Selecciona una matriz: ')
+    while output.get_size() > count:
+        print('{}. {}'.format(count, output.get_by_index(count).name))
+        count = count + 1
+
+    matrix_index = int(input('> '))
+    matrix = output.get_by_index(matrix_index)
+
+    xml_root = ET.Element(
+        'matriz', {'nombre': matrix.name, 'm': str(matrix.m), 'n': str(matrix.n)})
+
+    y_count = 0
+    while matrix.n > y_count:
+        x_count = 0
+        while matrix.m > x_count:
+            matrix_element = ET.SubElement(
+                xml_root, 'dato', {'x': str(x_count), 'y': str(y_count)})
+            matrix_element.text = str(matrix.get(x_count, y_count))
+            x_count = x_count + 1
+        y_count = y_count + 1
+
+    bin_xml = ET.tostring(xml_root)
+
+    with open(save(), 'wb') as f:
+        f.write(bin_xml)
 
 
 def print_info():
@@ -58,8 +115,10 @@ def main_menu(data: ListaEnlazada, output: ListaEnlazada):
             load_file(data)
             continue
         if opt == '2':
+            process_file(data, output)
             continue
         if opt == '3':
+            write_file(output)
             continue
         if opt == '4':
             print_info()

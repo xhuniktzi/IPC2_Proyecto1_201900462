@@ -104,6 +104,10 @@ class ListaEnlazada:
             node = node.next
             count = count + 1
 
+    # Vaciar lista enlazada
+    def clear(self):
+        self.head = None
+
     # Imprimir Lista
     def print_list(self):
         if not self.is_void():
