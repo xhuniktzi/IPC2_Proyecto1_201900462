@@ -57,8 +57,8 @@ class Matriz:
                     x_count, y_count, self.get(x_count, y_count)))
 
                 if not (y_count + 1) >= self.n:
-                    temp_file.write(
-                        'x{}y{} -> x{}y{};\n'.format(x_count, y_count, x_count, y_count+1))
+                    temp_file.write('x{}y{} -> x{}y{};\n'.format(
+                        x_count, y_count, x_count, y_count + 1))
                 y_count = y_count + 1
 
             temp_file.write('name -> x{}y{};'.format(x_count, 0))
@@ -78,8 +78,8 @@ class Matriz:
                     p_x_count, p_y_count, process.get(p_x_count, p_y_count)))
 
                 if not (p_y_count + 1) >= process.n:
-                    temp_file.write(
-                        'px{}py{} -> px{}py{};\n'.format(p_x_count, p_y_count, p_x_count, p_y_count+1))
+                    temp_file.write('px{}py{} -> px{}py{};\n'.format(
+                        p_x_count, p_y_count, p_x_count, p_y_count + 1))
                 p_y_count = p_y_count + 1
 
             temp_file.write('proc_name -> px{}py{};'.format(p_x_count, 0))

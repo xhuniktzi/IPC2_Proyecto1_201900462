@@ -12,12 +12,14 @@ def load_file(data: ListaEnlazada):
     xml_root = xml_tree.getroot()
     for matrix in xml_root:
         matrix_attrib = matrix.attrib
-        data.add_to_end(Matriz(matrix_attrib['nombre'], int(matrix_attrib['m']),
-                               int(matrix_attrib['n'])))
+        data.add_to_end(
+            Matriz(matrix_attrib['nombre'], int(matrix_attrib['m']),
+                   int(matrix_attrib['n'])))
         for obj in matrix:
             obj_attrib = obj.attrib
-            data.get_last().insert(int(obj_attrib['x'])-1,
-                                   int(obj_attrib['y'])-1, int(obj.text))
+            data.get_last().insert(
+                int(obj_attrib['x']) - 1,
+                int(obj_attrib['y']) - 1, int(obj.text))
 
 
 def process_file(data: ListaEnlazada, output: ListaEnlazada):
@@ -25,8 +27,8 @@ def process_file(data: ListaEnlazada, output: ListaEnlazada):
     count = 0
     while data.get_size() > count:
         matrix = data.get_by_index(count)
-        output_matrix = Matriz(
-            'output - {}'.format(matrix.name), matrix.m, matrix.n)
+        output_matrix = Matriz('output - {}'.format(matrix.name), matrix.m,
+                               matrix.n)
         y_count = 0
         while matrix.n > y_count:
             x_count = 0
@@ -57,15 +59,20 @@ def write_file(output: ListaEnlazada):
     matrix_index = int(input('> '))
     matrix = output.get_by_index(matrix_index)
 
-    xml_root = ET.Element(
-        'matriz', {'nombre': matrix.name, 'm': str(matrix.m), 'n': str(matrix.n)})
+    xml_root = ET.Element('matriz', {
+        'nombre': matrix.name,
+        'm': str(matrix.m),
+        'n': str(matrix.n)
+    })
 
     y_count = 0
     while matrix.n > y_count:
         x_count = 0
         while matrix.m > x_count:
-            matrix_element = ET.SubElement(
-                xml_root, 'dato', {'x': str(x_count), 'y': str(y_count)})
+            matrix_element = ET.SubElement(xml_root, 'dato', {
+                'x': str(x_count),
+                'y': str(y_count)
+            })
             matrix_element.text = str(matrix.get(x_count, y_count))
             x_count = x_count + 1
         y_count = y_count + 1
